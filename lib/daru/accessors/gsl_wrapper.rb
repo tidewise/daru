@@ -84,7 +84,18 @@ if Daru.has_gsl?
         end
 
         def initialize data, context
-          @data = ::GSL::Vector.alloc(data)
+          @data =
+            case data
+            when GSL::Vector, GSL::Vector::Int, GSL::Vector::Complex then
+              data
+            else
+              if data.respond_to?(:to_ary)
+                ::GSL::Vector.alloc(data)
+              else
+                raise ArgumentError, "unexpected data format for GSLWrapper"
+              end
+            end
+
           @context = context
         end
 

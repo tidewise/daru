@@ -1567,7 +1567,8 @@ module Daru
       index, source = parse_source(source, opts)
       set_name opts[:name]
 
-      @data  = cast_vector_to(opts[:dtype] || :array, source, opts[:nm_dtype])
+      dtype = opts[:dtype] || guess_dtype(source)
+      @data  = cast_vector_to(dtype, source, opts[:nm_dtype])
       @index = Index.coerce(index || @data.size)
 
       guard_sizes!
@@ -1623,6 +1624,15 @@ module Daru
       bss = h_est.keys.map { |v| [v, []] }.to_h
 
       [h_est, h_est.keys, bss]
+    end
+
+    def guess_dtype(source)
+      case source
+      when GSL::Vector, GSL::Vector::Int, GSL::Vector::Complex then
+        :gsl
+      else
+        :array
+      end
     end
 
     # Note: To maintain sanity, this _MUST_ be the _ONLY_ place in daru where the
