@@ -1627,6 +1627,8 @@ module Daru
     end
 
     def guess_dtype(source)
+      return :array unless Daru.has_gsl?
+
       case source
       when GSL::Vector, GSL::Vector::Int, GSL::Vector::Complex then
         :gsl
