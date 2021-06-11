@@ -27,6 +27,10 @@ module Daru
         set_size
       end
 
+      def at_positions(positions)
+        positions.map { |p| @data[p] }
+      end
+
       def [] *index
         @data[*index]
       end

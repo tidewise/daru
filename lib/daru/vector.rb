@@ -244,7 +244,7 @@ module Daru
 
       # Form a new Vector using positional indexes
       Daru::Vector.new(
-        positions.map { |loc| @data[loc] },
+        @data.at_positions(positions),
         name: @name,
         index: @index.subset(*input_indexes), dtype: @dtype
       )

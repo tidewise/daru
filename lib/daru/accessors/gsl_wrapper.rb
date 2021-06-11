@@ -99,6 +99,14 @@ if Daru.has_gsl?
           @context = context
         end
 
+        def at_positions(positions)
+            result = @data.class.alloc(positions.size)
+            positions.each_with_index do |p, i|
+                result[i] = @data[p]
+            end
+            GSLWrapper.new(result, @context)
+        end
+
         def []= index, element
           if index == size
             push element

@@ -34,6 +34,14 @@ if Daru.has_nmatrix?
           # init with twice the storage for reducing the need to resize
         end
 
+        def at_positions(positions)
+          self.class.new(
+              positions.map { |p| @data[p] },
+              @context,
+              @nm_dtype
+          )
+        end
+
         def [] *index
           return @data[*index] if index[0] < @size
           nil
