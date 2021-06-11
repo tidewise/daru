@@ -87,7 +87,7 @@ if Daru.has_gsl?
           @data =
             case data
             when GSL::Vector, GSL::Vector::Int, GSL::Vector::Complex then
-              data
+              data.dup
             else
               if data.respond_to?(:to_ary)
                 ::GSL::Vector.alloc(data)
