@@ -7,7 +7,28 @@ if Daru.has_gsl?
 
     context ".new" do
       it "actually creates a GSL Vector" do
-        expect(@gsl_wrapper.data.class).to eq(GSL::Vector)
+        expect(@gsl_wrapper.data).to eq(GSL::Vector.alloc(5,6))
+      end
+
+      it "dups a GSL::Vector when given one" do
+        gsl_vector = GSL::Vector.alloc()
+        expect(gsl_vector).to receive(:dup) { GSL::Vector.alloc(5,6) }
+        @gsl_wrapper = Daru::Accessors::GSLWrapper.new(gsl_vector, @stub_context)
+        expect(@gsl_wrapper.data).to eq(GSL::Vector.alloc(5,6))
+      end
+
+      it "dups a GSL::Int when given one" do
+        gsl_vector = GSL::Int.alloc()
+        expect(gsl_vector).to receive(:dup) { GSL::Int.alloc(5,6) }
+        @gsl_wrapper = Daru::Accessors::GSLWrapper.new(gsl_vector, @stub_context)
+        expect(@gsl_wrapper.data).to eq(GSL::Int.alloc(5,6))
+      end
+
+      it "dups a GSL::Complex when given one" do
+        gsl_vector = GSL::Complex.alloc()
+        expect(gsl_vector).to receive(:dup) { GSL::Complex.alloc(5,6) }
+        @gsl_wrapper = Daru::Accessors::GSLWrapper.new(gsl_vector, @stub_context)
+        expect(@gsl_wrapper.data).to eq(GSL::Complex.alloc(5,6))
       end
     end
 
