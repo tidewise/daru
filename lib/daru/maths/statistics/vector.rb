@@ -693,7 +693,7 @@ module Daru
           Daru::Vector.new(
             [nil] * (n - 1) +
             (0..(size - n)).map do |i|
-              Daru::Vector.new(@data[i...(i + n)]).send(function)
+              Daru::Vector.new(@data[i..(i + n - 1)]).send(function)
             end, index: @index
           )
         end
