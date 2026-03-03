@@ -1,4 +1,7 @@
-require 'rspec/core/rake_task'
+begin
+  require 'rspec/core/rake_task'
+rescue LoadError
+end
 require 'bundler/gem_tasks'
 
 lib_folder = File.expand_path("../lib", __FILE__)
